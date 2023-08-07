@@ -1,20 +1,3 @@
-<?php
- if(isset($_POST['aanvraagVerzenden'])) {
-	$volledigenaam = $_POST['name'];
-	$emailadres = $_POST['email'];
-	$bericht = $_POST['message'];
-	$selectOption = $_POST['services'];
-	
-	$to = "remsey@skills4-it.nl";
-	$subject = "Contactformulier remsey.nl";
-	$headers = "From: info@skills4-it.nl" . "\r\n" . "CC: remsey@skills4-it.nl";
-	$Bericht = "Naam: " . $volledigenaam . " van " . $emailadres . " - " . $selectOption . " - " .$bericht ;
-	mail($to,$subject,$Bericht,$headers);
-
- }else{
- } 
- ?>
-
 <!DOCTYPE html>
 <html lang="nl"> 
 <head>
