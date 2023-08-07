@@ -1,0 +1,232 @@
+<?php
+ if(isset($_POST['aanvraagVerzenden'])) {
+	$volledigenaam = $_POST['name'];
+	$emailadres = $_POST['email'];
+	$bericht = $_POST['message'];
+	$selectOption = $_POST['services'];
+	
+	$to = "remsey@skills4-it.nl";
+	$subject = "Contactformulier remsey.nl";
+	$headers = "From: info@skills4-it.nl" . "\r\n" . "CC: remsey@skills4-it.nl";
+	$Bericht = "Naam: " . $volledigenaam . " van " . $emailadres . " - " . $selectOption . " - " .$bericht ;
+	mail($to,$subject,$Bericht,$headers);
+
+ }else{
+ } 
+ ?>
+
+<!DOCTYPE html>
+<html lang="nl"> 
+<head>
+    <title>Remsey Mailjard - IT trainer, consultant & developer</title>
+    
+    <!-- Meta -->
+  	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Remsey Mailjard - CV">
+	<meta name="author" content="Remsey Mailjard">
+	<meta name="copyright" content="remsey.nl">    
+	<link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    
+    <!-- FontAwesome JS -->
+    <script defer src="assets/fontawesome/js/all.js"></script>
+    
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/theme-3.css">
+
+</head> 
+
+<body>
+    
+<header class="header text-center">	    
+		<div class="force-overflow">
+			<h1 class="blog-name pt-lg-4 mb-0"><a href="index.html">Remsey Mailjard</a></h1>
+			
+			<nav class="navbar navbar-expand-lg navbar-dark" >
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				
+				<div id="navigation" class="collapse navbar-collapse flex-column" >
+					<!--//profile-section-->
+					<div class="profile-section pt-3 pt-lg-0">
+						<img class="profile-image mb-3 rounded-circle mx-auto" src="assets/images/remsey-mailjard.jpg" alt="">	
+						
+						<div class="bio mb-3">Hoi, mijn naam is Remsey Mailjard. IT trainer & developer met een digitaal hart voor Microsoft technologie!</div><!--//bio-->
+						<ul class="social-list list-inline py-2 mx-auto">
+							<li class="list-inline-item"><a href="https://www.linkedin.com/in/remseymailjard/"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
+							<li class="list-inline-item"><a href="https://github.com/RemseyMailjard"><i class="fab fa-github-alt fa-fw"></i></a></li>
+							<li class="list-inline-item"><a href="https://stackoverflow.com/users/9171886/remsey-mailjard"><i class="fab fa-stack-overflow fa-fw"></i></a></li>
+							<li class="list-inline-item"><a href="https://twitter.com/remseymailjard"><i class="fab fa-twitter fa-fw"></i></a></li>
+						</ul><!--//social-list-->
+						<hr> 
+					</div><!--//profile-section-->
+					<!--//Website navigatie section-->
+					<ul class="navbar-nav flex-column text-left">
+						<li class="nav-item active">
+							<a class="nav-link" href="index.html"><i class="fas fa-user fa-fw mr-2"></i>Over mij<span class="sr-only">(huidig)</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="portfolio.html"><i class="fas fa-laptop-code fa-fw mr-2"></i>Portfolio</a>
+						</li>
+					
+						<li class="nav-item">
+							<a class="nav-link" href="cv.php"><i class="fas fa-file-alt fa-fw mr-2"></i>Mijn cv</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="blog-home.html"><i class="fas fa-blog fa-fw mr-2"></i>Blog</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="contact.php"><i class="fas fa-envelope-open-text fa-fw mr-2"></i>Contact</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fas fa-cogs fa-fw mr-2"></i>Meer pagina's
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="project.html">Projecten</a>
+								<a class="dropdown-item" href="blog-home.html">Blog</a>
+								<a class="dropdown-item" href="blog-home-alt.html">Kennisbank</a>
+								<a class="dropdown-item" href="wat-is-azure.html">Blog bericht</a>
+							</div>
+						</li>
+					</ul>
+					
+					<div class="my-2">
+						<a class="btn btn-primary" href="contact.php" target="_blank"><i class="fas fa-paper-plane mr-2"></i>Huur me in</a>
+					</div>
+					
+	
+					<div class="dark-mode-toggle text-center w-100">
+						<hr class="mb-4">
+					    <h4 class="toggle-name mb-3 "><i class="fas fa-adjust mr-1"></i>Dark Mode</h4>
+					    
+					    <input class="toggle" id="darkmode" type="checkbox">
+					    <label class="toggle-btn mx-auto mb-0" for="darkmode"></label>
+					    
+					</div><!--//dark-mode-toggle-->
+				</div>
+			</nav>
+		</div><!--//force-overflow-->
+	</header>
+	    
+    <div class="main-wrapper">
+	    <section class="cta-section theme-bg-light py-3">
+		    <div class="container text-center single-col-max-width">
+			    <h2 class="heading">Contact</h2>
+			    <div class="intro">
+			    <p>Geïnteresseerd om mij in te huren voor training, consultancy of development of wil je gewoon kennismaken. Vul onderstaande contactformulier in of stuur een e-mail naar <a href="mailto:remsey@skills4-it.nl">remsey@skills4-it.nl
+				</a></p>
+			    <p>Je kunt mij ook contacteren via onderstaande Social Media</p>
+			    <ul class="list-inline mb-0">
+					<li class="list-inline-item"><a href="https://www.linkedin.com/in/remseymailjard/"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
+							<li class="list-inline-item"><a href="https://github.com/RemseyMailjard"><i class="fab fa-github-alt fa-fw"></i></a></li>
+							<li class="list-inline-item"><a href="https://stackoverflow.com/users/9171886/remsey-mailjard"><i class="fab fa-stack-overflow fa-fw"></i></a></li>
+							<li class="list-inline-item"><a href="https://twitter.com/remseymailjard"><i class="fab fa-twitter fa-fw"></i></a></li>
+	                
+	                
+	                <!--<li class="list-inline-item mb-3"><a class="facebook" href="#"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a></li>-->
+	                
+	                
+	            </ul><!--//social-list-->
+				<div class="container">
+			    <form id="contact-form" class="contact-form col-lg-8 mx-lg-auto" method="post" action="contact.php">
+			        <h3 class="text-center mb-3">Neem contact op</h3>
+			        <div class="form-row">                                                           
+		                <div class="form-group col-md-6">
+		                    <label class="sr-only" for="cname">Naam</label>
+		                    <input type="text" class="form-control" id="cname" name="name" placeholder="Volledige naam" minlength="2" required="" aria-required="true">
+		                </div>                    
+		                <div class="form-group col-md-6">
+		                    <label class="sr-only" for="cemail">E-mailadres</label>
+		                    <input type="email" class="form-control" id="cemail" name="email" placeholder="E-mailadres" required="" aria-required="true">
+		                </div>
+		                <div class="form-group col-12">
+			                <select id="services" class="custom-select" name="services">
+								<option selected>Waar kan ik je mee helpen...</option>
+								<option value="basic">Training</option>
+								<option value="standard">Consultancy</option>
+								<option value="premium">Development</option>
+								<option value="not sure">Combinatie</option>
+							</select>
+							<small class="form-text text-muted pt-1"><i class="fas fa-info-circle mr-2 text-primary"></i>Mijn tarieven vind je hier <a href="services.html" target="_blank">Tarieven</a>.</small>
+						</div>
+		                <div class="form-group col-12">
+		                    <label class="sr-only" for="cmessage">Bericht:</label>
+		                    <textarea class="form-control" id="cmessage" name="message" placeholder="Voer hier je bericht in" rows="10" required="" aria-required="true"></textarea>
+		                </div>
+		                 <div class="form-group col-12">
+		                    <button type="submit" name="aanvraagVerzenden" class="btn btn-block btn-primary py-2">Versturen</button>
+		                </div>                           
+		            </div><!--//form-row-->
+		        </form>
+		    </div><!--//container-->
+			</div><!--//container-->
+			<div class="calendly-inline-widget" data-url="https://calendly.com/skills4-it/consultancy?hide_gdpr_banner=1" style="min-width:320px;height:630px;"></div>
+		<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+	    </section>
+
+		</div>
+						
+
+					</div>	</div>
+	 
+		  
+	    
+	    
+	
+
+    	<!-- Calendly inline widget begin -->
+	
+
+		</section>
+    </div><!--//main-wrapper-->
+    
+    <!-- *****CONFIGURE STYLE (REMOVE ON YOUR PRODUCTION SITE)****** -->  
+	<div id="config-panel" class="config-panel d-none d-lg-block">
+		<div class="panel-inner">
+			<a id="config-trigger" class="config-trigger config-panel-hide text-center" href="#"><i class="fas fa-cog mx-auto" data-fa-transform="down-6" ></i></a>
+			<h5 class="panel-title">Choose Colour</h5>
+			<ul id="color-options" class="list-inline mb-0">
+				<li class="theme-1 active list-inline-item"><a data-style="assets/css/theme-1.css" href="#"></a></li>
+				<li class="theme-2  list-inline-item"><a data-style="assets/css/theme-2.css" href="#"></a></li>
+				<li class="theme-3  list-inline-item"><a data-style="assets/css/theme-3.css" href="#"></a></li>
+				<li class="theme-4  list-inline-item"><a data-style="assets/css/theme-4.css" href="#"></a></li>
+				<li class="theme-5  list-inline-item"><a data-style="assets/css/theme-5.css" href="#"></a></li>
+				<li class="theme-6  list-inline-item"><a data-style="assets/css/theme-6.css" href="#"></a></li>
+				<li class="theme-7  list-inline-item"><a data-style="assets/css/theme-7.css" href="#"></a></li>
+				<li class="theme-8  list-inline-item"><a data-style="assets/css/theme-8.css" href="#"></a></li>
+				<li class="theme-9  list-inline-item"><a data-style="assets/css/theme-9.css" href="#"></a></li>
+				<li class="theme-10  list-inline-item"><a data-style="assets/css/theme-10.css" href="#"></a></li>
+			</ul>
+			<a id="config-close" class="close" href="#"><i class="fa fa-times-circle"></i></a>
+		</div><!--//panel-inner-->
+	</div><!--//configure-panel-->
+
+    <!-- Javascript -->          
+    <script src="assets/plugins/jquery-3.4.1.min.js"></script>
+    <script src="assets/plugins/popper.min.js"></script> 
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script> 
+    
+    <!--Page Specific JS -->
+    <script type="text/javascript" src="assets/plugins/jquery-validation/jquery.validate.min.js"></script> 
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="assets/js/form.js"></script>
+    
+    <!-- Dark Mode -->
+	<script src="assets/plugins/js-cookie.min.js"></script>
+	<script src="assets/js/dark-mode.js"></script>
+
+    <!-- Style Switcher (REMOVE ON YOUR PRODUCTION SITE) -->
+    <script src="assets/js/demo/style-switcher.js"></script>     
+    
+
+</body>
+</html> 
+
