@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skills4-IT Reviews2</title>
+
+  <!-- Externe CSS -->
+  <link rel="stylesheet" href="styles/reviewSpringest.css" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+  <!-- FontAwesome icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* --- BASIS STYLING & IMPORTS --- */
+
+    /* Import van een modern, goed leesbaar lettertype */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+    :root {
+      /* Originele kleuren */
+      --body-background-color: #f4f2ee;
+      --body-background-gradient: linear-gradient(135deg,
+          transparent,
+          rgba(224, 215, 215, 0.5));
+      
+      /* NIEUW: Toegevoegde themakleuren en variabelen voor consistentie */
+      --primary-color: #0056b3; /* Professionele, iets donkerdere blauwtint */
+      --success-color: #28a745;
+      --font-main: 'Poppins', sans-serif;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --card-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    body {
+      background: var(--body-background-gradient), var(--body-background-color);
+      font-family: var(--font-main); /* NIEUW: Toepassen van modern lettertype */
+      color: #333; /* Iets zachter dan puur zwart */
+    }
+
+    h2.card-title,
+    h2.text-center {
+      font-family: var(--font-main);
+      font-weight: 600; /* Maakt de titels krachtiger */
+      color: #2c3e50; /* Een donkerblauwe/grijze tint */
+    }
+
+    /* --- REVIEW FORMULIER STYLING --- */
+
+    .review-form-card {
+      margin-top: 50px;
+    }
+
+    /* VERBETERD: Vloeiendere animaties voor de sterren */
+    .rating {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 5px;
+    }
+    
+    .rating label {
+      font-size: 2rem;
+      color: lightgray;
+      cursor: pointer;
+      margin: 0;
+      transition: color 0.2s ease-in-out, transform 0.15s ease; /* VERBETERD: Soepele overgang */
+    }
+
+    .rating label:hover {
+      transform: scale(1.15); /* NIEUW: Maakt de ster iets groter bij hover */
+    }
+
+    .rating input[type="radio"] {
+      display: none;
+    }
+
+    .rating input[type="radio"]:checked~label,
+    .rating label:hover,
+    .rating label:hover~label {
+      color: gold;
+    }
+
+    /* VERBETERD: Tekst bij beoordeling gebruikt nu themakleur */
+    #rating-text {
+      margin-left: 10px;
+      font-size: 1rem;
+      color: var(--primary-color);
+    }
+
+    /* --- VERBETERDE FORMULIERELEMENTEN --- */
+    
+    .form-control,
+    .form-select {
+      border-radius: 8px; /* Iets rondere hoeken */
+      border: 1px solid #ddd;
+      padding: 10px 15px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2); /* Een subtiele gloed bij focus */
+      outline: none;
+    }
+
+    .form-label,
+    .form-check-label {
+      font-weight: 500; /* Iets dikker voor betere leesbaarheid */
+      color: #555;
+    }
+
+    /* Woordenteller blijft functioneel hetzelfde, maar profiteert van de nieuwe typografie */
+    #word-counter {
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+    #word-counter.valid { color: green; }
+    #word-counter.encouraging { color: orange; }
+    #word-counter.invalid { color: red; }
+
+
+    /* --- VERBETERDE VERSTUURKNOP --- */
+
+    #submit_button {
+      font-weight: 600;
+      padding: 12px 30px;
+      border-radius: 50px; /* Een "pilvorm" knop */
+      border: none;
+      background: linear-gradient(45deg, #28a745, #218838); /* Subtiel verloop */
+      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    #submit_button:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+      filter: brightness(1.1); /* Maakt de knop iets lichter bij hover */
+    }
+
+    #submit_button:disabled {
+      background: #e9ecef; /* Duidelijke kleur voor inactieve staat */
+      color: #6c757d;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* --- REVIEW KAARTEN STYLING --- */
+
+    .reviews-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* VERBETERD: Kaarten met meer "lift" en betere schaduw */
+    .review-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      flex: 1 1 calc(33.333% - 16px);
+      min-width: 300px;
+      border: 1px solid #f0f0f0; /* Een hele lichte rand */
+      box-shadow: var(--card-shadow);
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .review-card:hover {
+      transform: translateY(-5px); /* Iets meer omhoog */
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    @media (max-width: 1024px) {
+      .review-card {
+        flex: 1 1 calc(50% - 16px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .review-card {
+        flex: 1 1 100%;
+      }
+    }
+
+    /* Originele styling voor de inhoud van de kaarten blijft behouden */
+    .review-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .review-avatar img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .review-info {
+      flex-grow: 1;
+      margin-left: 10px;
+    }
+
+    .review-title {
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .review-author {
+      font-size: 0.9rem;
+      color: #555;
+      margin: 0;
+    }
+
+    .review-rating {
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: #ffcc00;
+      color: #333;
+      padding: 5px 10px;
+      border-radius: 5px;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .review-rating[data-rating="10"] { background: #4caf50; color: white; }
+    .review-rating[data-rating="9"], .review-rating[data-rating="8"] { background: #8bc34a; color: white; }
+    .review-rating[data-rating="7"], .review-rating[data-rating="6"] { background: #ffeb3b; color: black; }
+    .review-rating[data-rating="5"], .review-rating[data-rating="4"] { background: #ff9800; color: white; }
+    .review-rating[data-rating="3"], .review-rating[data-rating="2"], .review-rating[data-rating="1"] { background: #f44336; color: white; }
+
+    .review-body {
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .review-footer {
+      font-size: 0.85rem;
+      color: #777;
+      text-align: right;
+    }
+  </style>
+
+<body>
+  <header>
+    <div class="row mb-3">
+      <div class="col-12 text-center">
+        <p>
+          <span id="average-rating">0</span> op basis van
+          <span id="reviews-count">0</span> ervaringen
+        </p>
+      </div>
+    </div>
+    <h2 class="mb-5 text-center">Reviews van eerdere cursusdeelnemers</h2>
+  </header>
+
+  <main>
+    <!-- Sectie voor externe review widget -->
+    <section class="springest-review-widget text-center">
+      <a href="//www.springest.nl/skills4-it#ervaringen">Lees ervaringen met Skills4-IT op Springest…</a>
+      <script src="//www.springest.nl/reviewwidget.js" async></script>
+    </section>
+
+    <!-- Sectie voor het reviewformulier -->
+    <section id="review-form-section" class="container review-form-card">
+      <article class="card shadow-sm p-4">
+        <header>
+          <h2 class="card-title text-center mb-3">Schrijf een review</h2>
+        </header>
+        <p class="text-muted">
+          Fijn dat je de moeite neemt om een review te schrijven. Door het
+          opslaan van jouw review geef je toestemming dat we deze gegevens mogen
+          doorsturen naar recensiewebsites en vergelijkingswebsites. In het
+          formulier kun je aangeven of je dit wil anonimiseren.
+        </p>
+
+        <form id="review_form">
+          <!-- ⭐ Je beoordeling -->
+          <div class="mb-3">
+            <label for="rating-container" class="form-label">Je beoordeling:</label>
+            <div id="rating-container" class="d-flex align-items-center">
+              <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5" aria-label="5 sterren" />
+                <label for="star5" class="fas fa-star"></label>
+                <input type="radio" id="star4" name="rating" value="4" aria-label="4 sterren" />
+                <label for="star4" class="fas fa-star"></label>
+                <input type="radio" id="star3" name="rating" value="3" aria-label="3 sterren" />
+                <label for="star3" class="fas fa-star"></label>
+                <input type="radio" id="star2" name="rating" value="2" aria-label="2 sterren" />
+                <label for="star2" class="fas fa-star"></label>
+                <input type="radio" id="star1" name="rating" value="1" aria-label="1 ster" />
+                <label for="star1" class="fas fa-star"></label>
+              </div>
+              <span id="rating-text" class="ms-2">5/5 - Uitstekend!</span>
+            </div>
+          </div>
+
+          <!-- ⭐ Jouw ervaring -->
+          <div class="mb-3">
+            <label for="experience" class="form-label">Jouw ervaring:</label>
+            <textarea id="experience" name="experience" class="form-control" rows="4"
+              placeholder="Wat was goed? Wat kon beter? Denk aan inhoud, trainer, locatie, etc." required></textarea>
+            <span id="word-counter" class="invalid">Nog 30 woorden te gaan</span>
+          </div>
+
+          <!-- ⭐ Persoonlijke gegevens -->
+          <fieldset class="mb-3">
+            <legend class="form-label">Persoonlijke gegevens</legend>
+            <!-- NIEUW: Dropdown voor training -->
+            <div class="mb-3">
+              <label for="training-select" class="form-label">Gevolgde training:</label>
+              <select id="training-select" name="training" class="form-select" required>
+                <option value="" disabled selected>Kies een training...</option>
+                <option value="1028042">Power Apps en Power Automate</option>
+                <option value="772664">Algemene Cursus</option>
+              </select>
+            </div>
+            <!-- EINDE TOEVOEGING -->
+            <div class="mb-3">
+              <label for="firstname" class="form-label">Voornaam:</label>
+              <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Voer je voornaam in"
+                autocomplete="given-name" />
+            </div>
+            <div class="mb-3">
+              <label for="lastname" class="form-label">Achternaam:</label>
+              <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Voer je achternaam in"
+                autocomplete="family-name" />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">E-mailadres:</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Voer je e-mailadres in"
+                required autocomplete="email" />
+            </div>
+            <div class="mb-3">
+              <label for="function" class="form-label">Functie:</label>
+              <input type="text" id="function" name="function" class="form-control"
+                placeholder="Bijvoorbeeld: Senior Accountmanager" />
+            </div>
+          </fieldset>
+
+          <!-- ⭐ Toestemmingsvraag -->
+          <fieldset class="mb-3">
+            <legend class="form-label">Wil je de review anonimiseren?</legend>
+            <div class="form-check">
+              <input type="radio" id="consent1" class="form-check-input" name="consent"
+                value="achternaam_geanonimiseerd" />
+              <label for="consent1" class="form-check-label">Ja, met achternaam geanonimiseerd</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="consent2" class="form-check-input" name="consent" value="volledig_anoniem" />
+              <label for="consent2" class="form-check-label">Ja, volledig anoniem</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="consent3" class="form-check-input" name="consent" value="liever_niet" />
+              <label for="consent3" class="form-check-label">Nee, mijn naam mag vermeld worden</label>
+            </div>
+          </fieldset>
+
+          <!-- ⭐ Verstuurknop -->
+          <div class="text-center">
+            <button type="submit" class="btn btn-success btn-lg" id="submit_button" disabled>
+              Deel je ervaring
+            </button>
+          </div>
+        </form>
+      </article>
+    </section>
+
+    <!-- Sectie voor review navigatie en weergave -->
+    <section id="reviews-section" class="container mt-4">
+      <nav aria-label="Reviews navigatie">
+        <div class="row mb-3">
+          <div class="col-4">
+            <button id="prev-button" class="btn btn-primary" disabled>
+              Vorige
+            </button>
+          </div>
+          <div class="col-4 text-center">
+            <button id="load-all-button" class="btn btn-secondary">
+              Toon alle reviews
+            </button>
+          </div>
+          <div class="col-4 text-end">
+            <button id="next-button" class="btn btn-primary">Volgende</button>
+          </div>
+        </div>
+      </nav>
+      <div id="loading-indicator" class="text-center mt-3">
+        <p>Bezig met laden van reviews, even geduld alstublieft...</p>
+      </div>
+      <div class="mt-3 text-center">
+        <span id="last-offset-display"></span>
+      </div>
+      <div id="reviews-container" class="row g-3"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="text-center mt-4">© 2025 Skills4-IT Reviews</p>
+  </footer>
+
+  <!-- Externe JavaScript -->
+  <script src="js/reviewsSpringest.js"></script>
+
+  <!-- JavaScript voor Reviewformulier -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () =>
+    {
+      // Trigger "Toon alle reviews" knop bij het laden van de pagina
+      const loadAllButton = document.getElementById("load-all-button");
+      if (loadAllButton)
+      {
+        loadAllButton.click();
+      }
+
+      // Reviewformulier functionaliteit
+      const ratingInputs = document.querySelectorAll('input[name="rating"]');
+      const ratingText = document.getElementById("rating-text");
+      const experienceField = document.getElementById("experience");
+      const wordCounter = document.getElementById("word-counter");
+      const submitButton = document.getElementById("submit_button");
+      const firstnameField = document.getElementById("firstname");
+      const lastnameField = document.getElementById("lastname");
+      const emailField = document.getElementById("email");
+      const functionField = document.getElementById("function");
+      const consentRadios = document.querySelectorAll('input[name="consent"]');
+      const trainingSelect = document.getElementById("training-select"); // NIEUW
+      const MIN_WORDS = 30;
+
+      // Functie om gegevens op te slaan in localStorage met foutafhandeling
+      const saveToLocalStorage = (key, value) =>
+      {
+        try
+        {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch (e)
+        {
+          console.warn(`Kan ${key} niet opslaan in localStorage:`, e);
+        }
+      };
+
+      // Functie om gegevens uit localStorage te halen met foutafhandeling
+      const getFromLocalStorage = (key) =>
+      {
+        try
+        {
+          const stored = localStorage.getItem(key);
+          return stored ? JSON.parse(stored) : null;
+        } catch (e)
+        {
+          console.warn(`Kan ${key} niet ophalen uit localStorage:`, e);
+          return null;
+        }
+      };
+
+      // Functie om query parameters te parsen
+      const getQueryParams = () =>
+      {
+        const params = {};
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        for (const [key, value] of urlParams.entries())
+        {
+          params[key] = decodeURIComponent(value);
+        }
+        return params;
+      };
+
+      // Initialiseren van velden vanuit query parameters en localStorage
+      const initializeFields = () =>
+      {
+        const queryParams = getQueryParams();
+
+        // NIEUW: Gevolgde training
+        if (queryParams.training)
+        {
+          trainingSelect.value = queryParams.training;
+          saveToLocalStorage("training", queryParams.training);
+        } else
+        {
+          const storedTraining = getFromLocalStorage("training");
+          if (storedTraining)
+          {
+            trainingSelect.value = storedTraining;
+          }
+        }
+
+        // Rating
+        if (queryParams.rating)
+        {
+          const ratingInput = document.querySelector(
+            `input[name="rating"][value="${queryParams.rating}"]`
+          );
+          if (ratingInput)
+          {
+            ratingInput.checked = true;
+            updateRatingText(queryParams.rating);
+            saveToLocalStorage("rating", queryParams.rating);
+          }
+        } else
+        {
+          const storedRating = getFromLocalStorage("rating");
+          if (storedRating)
+          {
+            const ratingInput = document.querySelector(
+              `input[name="rating"][value="${storedRating}"]`
+            );
+            if (ratingInput)
+            {
+              ratingInput.checked = true;
+              updateRatingText(storedRating);
+            }
+          } else
+          {
+            updateRatingText(5);
+          }
+        }
+
+        // Experience
+        if (queryParams.experience)
+        {
+          experienceField.value = queryParams.experience;
+          saveToLocalStorage("experience", queryParams.experience);
+          updateWordCounter();
+        } else
+        {
+          const storedExperience = getFromLocalStorage("experience");
+          if (storedExperience)
+          {
+            experienceField.value = storedExperience;
+            updateWordCounter();
+          }
+        }
+
+        // Voornaam
+        if (queryParams.firstname)
+        {
+          firstnameField.value = queryParams.firstname;
+          saveToLocalStorage("firstname", queryParams.firstname);
+        } else
+        {
+          const storedFirstname = getFromLocalStorage("firstname");
+          if (storedFirstname)
+          {
+            firstnameField.value = storedFirstname;
+          }
+        }
+
+        // Achternaam
+        if (queryParams.lastname)
+        {
+          lastnameField.value = queryParams.lastname;
+          saveToLocalStorage("lastname", queryParams.lastname);
+        } else
+        {
+          const storedLastname = getFromLocalStorage("lastname");
+          if (storedLastname)
+          {
+            lastnameField.value = storedLastname;
+          }
+        }
+
+        // E-mailadres
+        if (queryParams.email)
+        {
+          emailField.value = queryParams.email;
+          saveToLocalStorage("email", queryParams.email);
+        } else
+        {
+          const storedEmail = getFromLocalStorage("email");
+          if (storedEmail)
+          {
+            emailField.value = storedEmail;
+          }
+        }
+
+        // Functie
+        if (queryParams.function)
+        {
+          functionField.value = queryParams.function;
+          saveToLocalStorage("function", queryParams.function);
+        } else
+        {
+          const storedFunction = getFromLocalStorage("function");
+          if (storedFunction)
+          {
+            functionField.value = storedFunction;
+          }
+        }
+
+        // Toestemmingsradio's
+        if (queryParams.consent)
+        {
+          const consentInput = document.querySelector(
+            `input[name="consent"][value="${queryParams.consent}"]`
+          );
+          if (consentInput)
+          {
+            consentInput.checked = true;
+            saveToLocalStorage("consent", queryParams.consent);
+          }
+        } else
+        {
+          const storedConsent = getFromLocalStorage("consent");
+          if (storedConsent)
+          {
+            const consentInput = document.querySelector(
+              `input[name="consent"][value="${storedConsent}"]`
+            );
+            if (consentInput)
+            {
+              consentInput.checked = true;
+            }
+          }
+        }
+
+        checkSubmitButton();
+      };
+
+      // Update rating text
+      const updateRatingText = (value) =>
+      {
+        const messages = ["Kan beter", "Redelijk", "Goed", "Zeer goed", "Uitstekend!"];
+        const index = Math.min(Math.max(parseInt(value) - 1, 0), messages.length - 1);
+        ratingText.textContent = `${value}/5 - ${messages[index]}`;
+      };
+
+      // Update woordenteller
+      const updateWordCounter = () =>
+      {
+        const wordCount = experienceField.value
+          .trim()
+          .split(/\s+/)
+          .filter((word) => word.length > 0).length;
+        const wordsRemaining = MIN_WORDS - wordCount;
+
+        if (wordsRemaining > 0)
+        {
+          submitButton.disabled = true;
+          wordCounter.textContent =
+            wordsRemaining > 10
+              ? `Nog ${wordsRemaining} woorden. Wat extra details kunnen je review nog waardevoller maken.`
+              : `Nog ${wordsRemaining} woorden. Je bent geweldig bezig! Je bent er bijna, houd vol!`;
+          wordCounter.classList.add(wordsRemaining > 5 ? "invalid" : "encouraging");
+          wordCounter.classList.remove("valid");
+        } else
+        {
+          wordCounter.textContent = `Je hebt genoeg woorden ingevoerd! (${wordCount} woorden)`;
+          wordCounter.classList.remove("invalid", "encouraging");
+          wordCounter.classList.add("valid");
+          submitButton.disabled = false;
+        }
+      };
+
+      // Controleer of submit button moet worden ingeschakeld
+      const checkSubmitButton = () =>
+      {
+        const wordCount = experienceField.value
+          .trim()
+          .split(/\s+/)
+          .filter((word) => word.length > 0).length;
+        submitButton.disabled = wordCount < MIN_WORDS;
+      };
+
+      // Event listeners voor rating
+      ratingInputs.forEach((input) =>
+      {
+        input.addEventListener("change", () =>
+        {
+          const value = input.value;
+          updateRatingText(value);
+          saveToLocalStorage("rating", value);
+          checkSubmitButton();
+        });
+      });
+
+      // Event listener voor experience
+      experienceField.addEventListener("input", () =>
+      {
+        const value = experienceField.value;
+        saveToLocalStorage("experience", value);
+        updateWordCounter();
+      });
+
+      // Event listeners voor andere tekstvelden
+      [firstnameField, lastnameField, emailField, functionField].forEach((field) =>
+      {
+        field.addEventListener("input", () =>
+        {
+          saveToLocalStorage(field.id, field.value);
+        });
+      });
+
+      // NIEUW: Event listener voor training dropdown
+      trainingSelect.addEventListener("change", () =>
+      {
+        saveToLocalStorage("training", trainingSelect.value);
+      });
+
+      // Event listeners voor consent radioknoppen
+      consentRadios.forEach((radio) =>
+      {
+        radio.addEventListener("change", () =>
+        {
+          if (radio.checked)
+          {
+            saveToLocalStorage("consent", radio.value);
+          }
+        });
+      });
+
+      // Formulier submit event
+      document.getElementById("review_form").addEventListener("submit", (e) =>
+      {
+        e.preventDefault();
+
+        const email = emailField.value;
+        const firstName = firstnameField.value;
+        const lastName = lastnameField.value;
+        const jobTitle = functionField.value;
+        const experience = experienceField.value;
+        const ratingOriginal = parseInt(
+          document.querySelector('input[name="rating"]:checked').value
+        );
+        // WIJZIGING: Haal de trainingId uit de dropdown
+        const trainingId = parseInt(trainingSelect.value, 10);
+        const trainerEmail = "info@skills4-it.nl";
+        const consentInput = document.querySelector('input[name="consent"]:checked');
+        const consentValue = consentInput ? consentInput.value : "liever_niet";
+        const rating = ratingOriginal * 2;
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        const trainingCompletedAt = `${year}-${month}-${day}`;
+        const description = `${experience}`;
+
+        const payload = {
+          requests: [
+            {
+              email: email,
+              first_name: firstName,
+              last_name: lastName,
+              job_title: jobTitle,
+              description: description,
+              rating: rating,
+              training_id: trainingId, // WIJZIGING: Deze waarde is nu dynamisch
+              training_completed_at: trainingCompletedAt,
+              trainer_email: trainerEmail,
+              anonymize: consentValue,
+            },
+          ],
+        };
+
+        console.log("JSON Payload:", JSON.stringify(payload, null, 2));
+
+        const apiUrl =
+          "https://prod-209.westeurope.logic.azure.com:443/workflows/268280bdd12a4fa0b69fe30796f2af2e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gTzh64rBWeXWrFX69084G0_Bx34jpjsA_SA3ht3B-GQ";
+
+        fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        })
+          .then(async (response) =>
+          {
+            if (!response.ok)
+            {
+              const text = await response.text();
+              let errorMessage = `Server responded with status ${response.status}: ${text}`;
+              try
+              {
+                const data = JSON.parse(text);
+                errorMessage = data.message || errorMessage;
+              } catch (e) { }
+              throw new Error(errorMessage);
+            }
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json"))
+            {
+              try
+              {
+                return await response.json();
+              } catch (e)
+              {
+                throw new Error("Ongeldige JSON-respons van de server.");
+              }
+            } else if (contentType && contentType.includes("text/plain"))
+            {
+              const text = await response.text();
+              throw new Error(text || "Geen inhoud in de serverrespons.");
+            } else
+            {
+              throw new Error("Onverwachte Content-Type in de serverrespons.");
+            }
+          })
+          .then((data) =>
+          {
+            console.log("Success:", data);
+            alert(
+              "Bedankt voor je review! Je ontvangt een bevestigingsmail met een groene knop om je ervaring te bevestigen."
+            );
+            document.getElementById("review_form").reset();
+            wordCounter.textContent = `Nog ${MIN_WORDS} woorden te gaan`;
+            wordCounter.classList.add("invalid");
+            wordCounter.classList.remove("valid", "encouraging");
+            updateRatingText(5);
+            submitButton.disabled = true;
+          })
+          .catch((error) =>
+          {
+            console.error("Error:", error);
+            alert(
+              `Er is een fout opgetreden bij het indienen van je review: ${error.message}\nProbeer het later opnieuw.`
+            );
+            checkSubmitButton();
+          });
+      });
+
+      initializeFields();
+    });
+  </script>
+</body>
+
+</html>
